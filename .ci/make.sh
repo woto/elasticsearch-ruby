@@ -57,4 +57,4 @@ docker run \
        elastic/elasticsearch-ruby \
        git config --global user.email ${GIT_EMAIL} && \
        git config --global user.name ${GIT_NAME} && \
-       bundle exec rake unified_release:"$TASK"
+       bundle exec rake bundle:clean bundle:install unified_release:"$TASK"
