@@ -95,12 +95,14 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
     end
 
     should "reindex via the API integration" do
-      @client.indices.create index: 'test4'
+      unless RUBY_VERSION >= '3.0.0'
+        @client.indices.create index: 'test4'
 
-      @client.reindex source: { index: 'test1' }, target: { index: 'test4' }
-      @client.indices.refresh index: 'test4'
+        @client.reindex source: { index: 'test1' }, dest: { index: 'test4' }
+        @client.indices.refresh index: 'test4'
 
-      assert_equal 3, @client.search(index: 'test4')['hits']['total']['value']
+        assert_equal 3, @client.search(index: 'test4')['hits']['total']['value']
+      end
     end
   end
 
